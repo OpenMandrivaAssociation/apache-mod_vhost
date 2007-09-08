@@ -1,7 +1,7 @@
 Summary:	Mod_vhost is a DSO module for the apache web server
 Name:		apache-mod_vhost
 Version:	2.3
-Release:	%mkrel 4
+Release:	%mkrel 5
 Group:		System/Servers
 License:	GPL
 URL:		http://kwiatek.eu.org/mod_vhost/
@@ -19,7 +19,7 @@ Requires:	apache-conf >= 2.2.0
 Requires:	apache >= 2.2.0
 BuildRequires:	apache-devel >= 2.2.0
 BuildRequires:	file
-BuildRequires:	MySQL-devel
+BuildRequires:	mysql-devel
 BuildRequires:	db4-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	postgresql-devel
