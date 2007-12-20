@@ -23,6 +23,7 @@ BuildRequires:	mysql-devel
 BuildRequires:	db4-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	postgresql-devel
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 This module is provided for Virtual Host based on LDAP Directory Server, MySQL,
