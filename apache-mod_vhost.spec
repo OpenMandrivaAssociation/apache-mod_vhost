@@ -1,7 +1,7 @@
 Summary:	Mod_vhost is a DSO module for the apache web server
 Name:		apache-mod_vhost
 Version:	2.3
-Release:	%mkrel 5
+Release:	%mkrel 6
 Group:		System/Servers
 License:	GPL
 URL:		http://kwiatek.eu.org/mod_vhost/
