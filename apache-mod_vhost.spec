@@ -1,16 +1,16 @@
 Summary:	Mod_vhost is a DSO module for the apache web server
 Name:		apache-mod_vhost
-Version:	2.3
-Release:	%mkrel 6
+Version:	2.3.1
+Release:	%mkrel 1
 Group:		System/Servers
 License:	GPL
 URL:		http://kwiatek.eu.org/mod_vhost/
 # there is no official tar ball
-Source0:	http://kwiatek.eu.org/mod_vhost/vhost/ver2.3/mod_vhost.c.bz2
-Source1:	A75_mod_vhost_ldap.conf.bz2
-Source2:	A76_mod_vhost_mysql1.conf.bz2
-Source3:	A77_mod_vhost_pgsql.conf.bz2
-Source4:	A78_mod_vhost_sqlite3.conf.bz2
+Source0:	http://kwiatek.eu.org/mod_vhost/vhost/ver2.3.1/mod_vhost.c
+Source1:	A75_mod_vhost_ldap.conf
+Source2:	A76_mod_vhost_mysql1.conf
+Source3:	A77_mod_vhost_pgsql.conf
+Source4:	A78_mod_vhost_sqlite3.conf
 Requires(pre): rpm-helper
 Requires(postun): rpm-helper
 Requires(pre):	apache-conf >= 2.2.0
@@ -117,17 +117,17 @@ This module provides Virtual Hosting based on SQLite3 database.
 
 %setup -q -c -T -n mod_vhost-%{version}
 
-bzcat %{SOURCE0} > mod_vhost.c
-bzcat %{SOURCE1} > A75_mod_vhost_ldap.conf
-bzcat %{SOURCE2} > A76_mod_vhost_mysql1.conf
-bzcat %{SOURCE3} > A77_mod_vhost_pgsql.conf
-bzcat %{SOURCE4} > A78_mod_vhost_sqlite3.conf
+cp %{SOURCE0} mod_vhost.c
+cp %{SOURCE1} A75_mod_vhost_ldap.conf
+cp %{SOURCE2} A76_mod_vhost_mysql1.conf
+cp %{SOURCE3} A77_mod_vhost_pgsql.conf
+cp %{SOURCE4} A78_mod_vhost_sqlite3.conf
 
 # strip away annoying ^M
 find . -type f|xargs file|grep 'CRLF'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
 find . -type f|xargs file|grep 'text'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
 
-# use db4-2
+# use latest db4
 perl -pi -e "s|\<db43\/db\.h\>|\<db4\/db\.h\>|g" mod_vhost.c
 
 %build
@@ -141,7 +141,7 @@ perl -pi -e "s|mod_vhost_module|vhost_sqlite3_module|g" mod_vhost_sqlite3.c
 perl -pi -e "s|/tmp/positive\.db|%{_localstatedir}/apache-mod_vhost_sqlite3/positive\.db|g" mod_vhost_sqlite3.c
 perl -pi -e "s|/tmp/negative\.db|%{_localstatedir}/apache-mod_vhost_sqlite3/negative\.db|g" mod_vhost_sqlite3.c
 perl -pi -e "s|/tmp/baza\.db|%{_localstatedir}/apache-mod_vhost_sqlite3/baza\.db|g" mod_vhost_sqlite3.c
-%{_sbindir}/apxs -DHAVE_SQLITE  -DHAVE_PHP -I%{_includedir}/pgsql -L%{_libdir} -Wl,-ldb-4.2 -Wl,-lsqlite3 -c mod_vhost_sqlite3.c
+%{_sbindir}/apxs -DHAVE_SQLITE  -DHAVE_PHP -I%{_includedir}/pgsql -L%{_libdir} -Wl,-ldb-4.6 -Wl,-lsqlite3 -c mod_vhost_sqlite3.c
 mv .libs/mod_vhost_sqlite3.so .
 rm -rf .libs *.{la,lo,o,slo}
 
@@ -151,7 +151,7 @@ perl -pi -e "s|mod_vhost\.c|mod_vhost_pgsql\.c|g" mod_vhost_pgsql.c
 perl -pi -e "s|mod_vhost_module|vhost_pgsql_module|g" mod_vhost_pgsql.c
 perl -pi -e "s|/tmp/positive\.db|%{_localstatedir}/apache-mod_vhost_pgsql/positive\.db|g" mod_vhost_pgsql.c
 perl -pi -e "s|/tmp/negative\.db|%{_localstatedir}/apache-mod_vhost_pgsql/negative\.db|g" mod_vhost_pgsql.c
-%{_sbindir}/apxs -DHAVE_PGSQL -DHAVE_PHP -I%{_includedir}/pgsql -L%{_libdir} -Wl,-ldb-4.2 -Wl,-lpq -c mod_vhost_pgsql.c
+%{_sbindir}/apxs -DHAVE_PGSQL -DHAVE_PHP -I%{_includedir}/pgsql -L%{_libdir} -Wl,-ldb-4.6 -Wl,-lpq -c mod_vhost_pgsql.c
 mv .libs/mod_vhost_pgsql.so .
 rm -rf .libs *.{la,lo,o,slo}
 
@@ -161,7 +161,7 @@ perl -pi -e "s|mod_vhost\.c|mod_vhost_mysql1\.c|g" mod_vhost_mysql1.c
 perl -pi -e "s|mod_vhost_module|vhost_mysql1_module|g" mod_vhost_mysql1.c
 perl -pi -e "s|/tmp/positive\.db|%{_localstatedir}/apache-mod_vhost_mysql/positive\.db|g" mod_vhost_mysql1.c
 perl -pi -e "s|/tmp/negative\.db|%{_localstatedir}/apache-mod_vhost_mysql/negative\.db|g" mod_vhost_mysql1.c
-%{_sbindir}/apxs -DHAVE_MYSQL -DHAVE_PHP -I%{_includedir}/mysql -L%{_libdir} -Wl,-ldb-4.2 -Wl,-lmysqlclient -c mod_vhost_mysql1.c
+%{_sbindir}/apxs -DHAVE_MYSQL -DHAVE_PHP -I%{_includedir}/mysql -L%{_libdir} -Wl,-ldb-4.6 -Wl,-lmysqlclient -c mod_vhost_mysql1.c
 mv .libs/mod_vhost_mysql1.so .
 rm -rf .libs *.{la,lo,o,slo}
 
@@ -171,7 +171,7 @@ perl -pi -e "s|mod_vhost\.c|mod_vhost_ldap\.c|g" mod_vhost_ldap.c
 perl -pi -e "s|mod_vhost_module|vhost_ldap_module|g" mod_vhost_ldap.c
 perl -pi -e "s|/tmp/positive\.db|%{_localstatedir}/apache-mod_vhost_ldap/positive\.db|g" mod_vhost_ldap.c
 perl -pi -e "s|/tmp/negative\.db|%{_localstatedir}/apache-mod_vhost_ldap/negative\.db|g" mod_vhost_ldap.c
-%{_sbindir}/apxs -DHAVE_LDAP -DHAVE_PHP -I%{_includedir}/ldap -L%{_libdir} -Wl,-ldb-4.2 -Wl,-lldap -c mod_vhost_ldap.c
+%{_sbindir}/apxs -DHAVE_LDAP -DHAVE_PHP -I%{_includedir}/ldap -L%{_libdir} -Wl,-ldb-4.6 -Wl,-lldap -c mod_vhost_ldap.c
 mv .libs/mod_vhost_ldap.so .
 rm -rf .libs *.{la,lo,o,slo}
 
@@ -269,5 +269,3 @@ fi
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/A78_mod_vhost_sqlite3.conf
 %attr(0755,root,root) %{_libdir}/apache-extramodules/mod_vhost_sqlite3.so
 %attr(0755,apache,apache) %dir %{_localstatedir}/apache-mod_vhost_sqlite3
-
-
