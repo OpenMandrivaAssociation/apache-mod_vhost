@@ -1,4 +1,4 @@
-Summary:	Mod_vhost is a DSO module for the apache web server
+Summary:	DSO module for the apache web server
 Name:		apache-mod_vhost
 Version:	2.3.1
 Release:	%mkrel 1
