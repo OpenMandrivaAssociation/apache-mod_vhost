@@ -138,9 +138,9 @@ perl -pi -e "s|\<db43\/db\.h\>|\<db4\/db\.h\>|g" mod_vhost.c
 cp mod_vhost.c mod_vhost_sqlite3.c
 perl -pi -e "s|mod_vhost\.c|mod_vhost_sqlite3\.c|g" mod_vhost_sqlite3.c
 perl -pi -e "s|mod_vhost_module|vhost_sqlite3_module|g" mod_vhost_sqlite3.c
-perl -pi -e "s|/tmp/positive\.db|%{_localstatedir}/lib/apache-mod_vhost_sqlite3/positive\.db|g" mod_vhost_sqlite3.c
-perl -pi -e "s|/tmp/negative\.db|%{_localstatedir}/lib/apache-mod_vhost_sqlite3/negative\.db|g" mod_vhost_sqlite3.c
-perl -pi -e "s|/tmp/baza\.db|%{_localstatedir}/lib/apache-mod_vhost_sqlite3/baza\.db|g" mod_vhost_sqlite3.c
+perl -pi -e "s|/tmp/positive\.db|/var/lib/apache-mod_vhost_sqlite3/positive\.db|g" mod_vhost_sqlite3.c
+perl -pi -e "s|/tmp/negative\.db|/var/lib/apache-mod_vhost_sqlite3/negative\.db|g" mod_vhost_sqlite3.c
+perl -pi -e "s|/tmp/baza\.db|/var/lib/apache-mod_vhost_sqlite3/baza\.db|g" mod_vhost_sqlite3.c
 %{_sbindir}/apxs -DHAVE_SQLITE  -DHAVE_PHP -I%{_includedir}/pgsql -L%{_libdir} -Wl,-ldb-4.6 -Wl,-lsqlite3 -c mod_vhost_sqlite3.c
 mv .libs/mod_vhost_sqlite3.so .
 rm -rf .libs *.{la,lo,o,slo}
@@ -149,8 +149,8 @@ rm -rf .libs *.{la,lo,o,slo}
 cp mod_vhost.c mod_vhost_pgsql.c
 perl -pi -e "s|mod_vhost\.c|mod_vhost_pgsql\.c|g" mod_vhost_pgsql.c
 perl -pi -e "s|mod_vhost_module|vhost_pgsql_module|g" mod_vhost_pgsql.c
-perl -pi -e "s|/tmp/positive\.db|%{_localstatedir}/lib/apache-mod_vhost_pgsql/positive\.db|g" mod_vhost_pgsql.c
-perl -pi -e "s|/tmp/negative\.db|%{_localstatedir}/lib/apache-mod_vhost_pgsql/negative\.db|g" mod_vhost_pgsql.c
+perl -pi -e "s|/tmp/positive\.db|/var/lib/apache-mod_vhost_pgsql/positive\.db|g" mod_vhost_pgsql.c
+perl -pi -e "s|/tmp/negative\.db|/var/lib/apache-mod_vhost_pgsql/negative\.db|g" mod_vhost_pgsql.c
 %{_sbindir}/apxs -DHAVE_PGSQL -DHAVE_PHP -I%{_includedir}/pgsql -L%{_libdir} -Wl,-ldb-4.6 -Wl,-lpq -c mod_vhost_pgsql.c
 mv .libs/mod_vhost_pgsql.so .
 rm -rf .libs *.{la,lo,o,slo}
@@ -159,8 +159,8 @@ rm -rf .libs *.{la,lo,o,slo}
 cp mod_vhost.c mod_vhost_mysql1.c
 perl -pi -e "s|mod_vhost\.c|mod_vhost_mysql1\.c|g" mod_vhost_mysql1.c
 perl -pi -e "s|mod_vhost_module|vhost_mysql1_module|g" mod_vhost_mysql1.c
-perl -pi -e "s|/tmp/positive\.db|%{_localstatedir}/lib/apache-mod_vhost_mysql/positive\.db|g" mod_vhost_mysql1.c
-perl -pi -e "s|/tmp/negative\.db|%{_localstatedir}/lib/apache-mod_vhost_mysql/negative\.db|g" mod_vhost_mysql1.c
+perl -pi -e "s|/tmp/positive\.db|/var/lib/apache-mod_vhost_mysql/positive\.db|g" mod_vhost_mysql1.c
+perl -pi -e "s|/tmp/negative\.db|/var/lib/apache-mod_vhost_mysql/negative\.db|g" mod_vhost_mysql1.c
 %{_sbindir}/apxs -DHAVE_MYSQL -DHAVE_PHP -I%{_includedir}/mysql -L%{_libdir} -Wl,-ldb-4.6 -Wl,-lmysqlclient -c mod_vhost_mysql1.c
 mv .libs/mod_vhost_mysql1.so .
 rm -rf .libs *.{la,lo,o,slo}
@@ -169,8 +169,8 @@ rm -rf .libs *.{la,lo,o,slo}
 cp mod_vhost.c mod_vhost_ldap.c
 perl -pi -e "s|mod_vhost\.c|mod_vhost_ldap\.c|g" mod_vhost_ldap.c
 perl -pi -e "s|mod_vhost_module|vhost_ldap_module|g" mod_vhost_ldap.c
-perl -pi -e "s|/tmp/positive\.db|%{_localstatedir}/lib/apache-mod_vhost_ldap/positive\.db|g" mod_vhost_ldap.c
-perl -pi -e "s|/tmp/negative\.db|%{_localstatedir}/lib/apache-mod_vhost_ldap/negative\.db|g" mod_vhost_ldap.c
+perl -pi -e "s|/tmp/positive\.db|/var/lib/apache-mod_vhost_ldap/positive\.db|g" mod_vhost_ldap.c
+perl -pi -e "s|/tmp/negative\.db|/var/lib/apache-mod_vhost_ldap/negative\.db|g" mod_vhost_ldap.c
 %{_sbindir}/apxs -DHAVE_LDAP -DHAVE_PHP -I%{_includedir}/ldap -L%{_libdir} -Wl,-ldb-4.6 -Wl,-lldap -c mod_vhost_ldap.c
 mv .libs/mod_vhost_ldap.so .
 rm -rf .libs *.{la,lo,o,slo}
@@ -180,10 +180,10 @@ rm -rf .libs *.{la,lo,o,slo}
 
 install -d %{buildroot}%{_sysconfdir}/httpd/modules.d
 install -d %{buildroot}%{_libdir}/apache-extramodules
-install -d %{buildroot}%{_localstatedir}/lib/apache-mod_vhost_sqlite3
-install -d %{buildroot}%{_localstatedir}/lib/apache-mod_vhost_pgsql
-install -d %{buildroot}%{_localstatedir}/lib/apache-mod_vhost_mysql
-install -d %{buildroot}%{_localstatedir}/lib/apache-mod_vhost_ldap
+install -d %{buildroot}/var/lib/apache-mod_vhost_sqlite3
+install -d %{buildroot}/var/lib/apache-mod_vhost_pgsql
+install -d %{buildroot}/var/lib/apache-mod_vhost_mysql
+install -d %{buildroot}/var/lib/apache-mod_vhost_ldap
 
 install -m0755 mod_vhost_ldap.so %{buildroot}%{_libdir}/apache-extramodules/
 install -m0755 mod_vhost_mysql1.so %{buildroot}%{_libdir}/apache-extramodules/
@@ -250,22 +250,22 @@ fi
 %defattr(-,root,root)
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/A75_mod_vhost_ldap.conf
 %attr(0755,root,root) %{_libdir}/apache-extramodules/mod_vhost_ldap.so
-%attr(0755,apache,apache) %dir %{_localstatedir}/lib/apache-mod_vhost_ldap
+%attr(0755,apache,apache) %dir /var/lib/apache-mod_vhost_ldap
 
 %files -n apache-mod_vhost_mysql1
 %defattr(-,root,root)
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/A76_mod_vhost_mysql1.conf
 %attr(0755,root,root) %{_libdir}/apache-extramodules/mod_vhost_mysql1.so
-%attr(0755,apache,apache) %dir %{_localstatedir}/lib/apache-mod_vhost_mysql
+%attr(0755,apache,apache) %dir /var/lib/apache-mod_vhost_mysql
 
 %files -n apache-mod_vhost_pgsql
 %defattr(-,root,root)
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/A77_mod_vhost_pgsql.conf
 %attr(0755,root,root) %{_libdir}/apache-extramodules/mod_vhost_pgsql.so
-%attr(0755,apache,apache) %dir %{_localstatedir}/lib/apache-mod_vhost_pgsql
+%attr(0755,apache,apache) %dir /var/lib/apache-mod_vhost_pgsql
 
 %files -n apache-mod_vhost_sqlite3
 %defattr(-,root,root)
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/A78_mod_vhost_sqlite3.conf
 %attr(0755,root,root) %{_libdir}/apache-extramodules/mod_vhost_sqlite3.so
-%attr(0755,apache,apache) %dir %{_localstatedir}/lib/apache-mod_vhost_sqlite3
+%attr(0755,apache,apache) %dir /var/lib/apache-mod_vhost_sqlite3
