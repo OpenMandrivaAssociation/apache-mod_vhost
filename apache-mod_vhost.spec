@@ -1,7 +1,7 @@
 Summary:	DSO module for the apache web server
 Name:		apache-mod_vhost
 Version:	2.3.1
-Release:	%mkrel 7
+Release:	%mkrel 8
 Group:		System/Servers
 License:	GPL
 URL:		http://kwiatek.eu.org/mod_vhost/
@@ -141,7 +141,7 @@ perl -pi -e "s|mod_vhost_module|vhost_sqlite3_module|g" mod_vhost_sqlite3.c
 perl -pi -e "s|/tmp/positive\.db|/var/lib/apache-mod_vhost_sqlite3/positive\.db|g" mod_vhost_sqlite3.c
 perl -pi -e "s|/tmp/negative\.db|/var/lib/apache-mod_vhost_sqlite3/negative\.db|g" mod_vhost_sqlite3.c
 perl -pi -e "s|/tmp/baza\.db|/var/lib/apache-mod_vhost_sqlite3/baza\.db|g" mod_vhost_sqlite3.c
-%{_sbindir}/apxs -DHAVE_SQLITE  -DHAVE_PHP -I%{_includedir}/pgsql -L%{_libdir} -Wl,-ldb-4.6 -Wl,-lsqlite3 -c mod_vhost_sqlite3.c
+%{_sbindir}/apxs -DHAVE_SQLITE  -DHAVE_PHP -I%{_includedir}/pgsql -L%{_libdir} -Wl,-ldb -Wl,-lsqlite3 -c mod_vhost_sqlite3.c
 mv .libs/mod_vhost_sqlite3.so .
 rm -rf .libs *.{la,lo,o,slo}
 
@@ -151,7 +151,7 @@ perl -pi -e "s|mod_vhost\.c|mod_vhost_pgsql\.c|g" mod_vhost_pgsql.c
 perl -pi -e "s|mod_vhost_module|vhost_pgsql_module|g" mod_vhost_pgsql.c
 perl -pi -e "s|/tmp/positive\.db|/var/lib/apache-mod_vhost_pgsql/positive\.db|g" mod_vhost_pgsql.c
 perl -pi -e "s|/tmp/negative\.db|/var/lib/apache-mod_vhost_pgsql/negative\.db|g" mod_vhost_pgsql.c
-%{_sbindir}/apxs -DHAVE_PGSQL -DHAVE_PHP -I%{_includedir}/pgsql -L%{_libdir} -Wl,-ldb-4.6 -Wl,-lpq -c mod_vhost_pgsql.c
+%{_sbindir}/apxs -DHAVE_PGSQL -DHAVE_PHP -I%{_includedir}/pgsql -L%{_libdir} -Wl,-ldb -Wl,-lpq -c mod_vhost_pgsql.c
 mv .libs/mod_vhost_pgsql.so .
 rm -rf .libs *.{la,lo,o,slo}
 
@@ -161,7 +161,7 @@ perl -pi -e "s|mod_vhost\.c|mod_vhost_mysql1\.c|g" mod_vhost_mysql1.c
 perl -pi -e "s|mod_vhost_module|vhost_mysql1_module|g" mod_vhost_mysql1.c
 perl -pi -e "s|/tmp/positive\.db|/var/lib/apache-mod_vhost_mysql/positive\.db|g" mod_vhost_mysql1.c
 perl -pi -e "s|/tmp/negative\.db|/var/lib/apache-mod_vhost_mysql/negative\.db|g" mod_vhost_mysql1.c
-%{_sbindir}/apxs -DHAVE_MYSQL -DHAVE_PHP -I%{_includedir}/mysql -L%{_libdir} -Wl,-ldb-4.6 -Wl,-lmysqlclient -c mod_vhost_mysql1.c
+%{_sbindir}/apxs -DHAVE_MYSQL -DHAVE_PHP -I%{_includedir}/mysql -L%{_libdir} -Wl,-ldb -Wl,-lmysqlclient -c mod_vhost_mysql1.c
 mv .libs/mod_vhost_mysql1.so .
 rm -rf .libs *.{la,lo,o,slo}
 
@@ -171,7 +171,7 @@ perl -pi -e "s|mod_vhost\.c|mod_vhost_ldap\.c|g" mod_vhost_ldap.c
 perl -pi -e "s|mod_vhost_module|vhost_ldap_module|g" mod_vhost_ldap.c
 perl -pi -e "s|/tmp/positive\.db|/var/lib/apache-mod_vhost_ldap/positive\.db|g" mod_vhost_ldap.c
 perl -pi -e "s|/tmp/negative\.db|/var/lib/apache-mod_vhost_ldap/negative\.db|g" mod_vhost_ldap.c
-%{_sbindir}/apxs -DHAVE_LDAP -DHAVE_PHP -I%{_includedir}/ldap -L%{_libdir} -Wl,-ldb-4.6 -Wl,-lldap -c mod_vhost_ldap.c
+%{_sbindir}/apxs -DHAVE_LDAP -DHAVE_PHP -I%{_includedir}/ldap -L%{_libdir} -Wl,-ldb -Wl,-lldap -c mod_vhost_ldap.c
 mv .libs/mod_vhost_ldap.so .
 rm -rf .libs *.{la,lo,o,slo}
 
