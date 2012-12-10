@@ -1,5 +1,0 @@
-A75_mod_vhost_ldap.conf
-A76_mod_vhost_mysql1.conf
-A77_mod_vhost_pgsql.conf
-A78_mod_vhost_sqlite3.conf
-mod_vhost.c

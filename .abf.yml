@@ -1,6 +1,0 @@
-sources:
-  "A75_mod_vhost_ldap.conf:"	e0073be64f88aabef038c0ed69aea46eff8130fd
-  "A76_mod_vhost_mysql1.conf:"	e2245596d5ede7ac31929c60bf6b34e53256fc9d
-  "A77_mod_vhost_pgsql.conf:"	cf03518a63f856ac83ff48a152031aaf613718a2
-  "A78_mod_vhost_sqlite3.conf:"	6cc9d003c51f00ba264e1b7791adcb9e67a09114
-  "mod_vhost.c:"	22972311ed3541653ea9a926d9a697560f466549

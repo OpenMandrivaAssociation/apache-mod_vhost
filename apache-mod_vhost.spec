@@ -1,7 +1,7 @@
 Summary:	DSO module for the apache web server
 Name:		apache-mod_vhost
 Version:	2.3.1
-Release:	%mkrel 21
+Release:	21
 Group:		System/Servers
 License:	GPL
 URL:		http://kwiatek.eu.org/mod_vhost/
@@ -23,7 +23,6 @@ BuildRequires:	mysql-devel
 BuildRequires:	db-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	postgresql-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 This module is provided for Virtual Host based on LDAP Directory Server, MySQL,
@@ -141,7 +140,7 @@ perl -pi -e "s|mod_vhost_module|vhost_sqlite3_module|g" mod_vhost_sqlite3.c
 perl -pi -e "s|/tmp/positive\.db|/var/lib/apache-mod_vhost_sqlite3/positive\.db|g" mod_vhost_sqlite3.c
 perl -pi -e "s|/tmp/negative\.db|/var/lib/apache-mod_vhost_sqlite3/negative\.db|g" mod_vhost_sqlite3.c
 perl -pi -e "s|/tmp/baza\.db|/var/lib/apache-mod_vhost_sqlite3/baza\.db|g" mod_vhost_sqlite3.c
-%{_sbindir}/apxs -DHAVE_SQLITE  -DHAVE_PHP -I%{_includedir}/pgsql -c mod_vhost_sqlite3.c %{ldflags} -L%{_libdir} -Wl,-ldb -Wl,-lsqlite3 -Wl,-lapr-1
+%{_bindir}/apxs -DHAVE_SQLITE  -DHAVE_PHP -I%{_includedir}/pgsql -c mod_vhost_sqlite3.c %{ldflags} -L%{_libdir} -Wl,-ldb -Wl,-lsqlite3 -Wl,-lapr-1
 mv .libs/mod_vhost_sqlite3.so .
 rm -rf .libs *.{la,lo,o,slo}
 
@@ -151,7 +150,7 @@ perl -pi -e "s|mod_vhost\.c|mod_vhost_pgsql\.c|g" mod_vhost_pgsql.c
 perl -pi -e "s|mod_vhost_module|vhost_pgsql_module|g" mod_vhost_pgsql.c
 perl -pi -e "s|/tmp/positive\.db|/var/lib/apache-mod_vhost_pgsql/positive\.db|g" mod_vhost_pgsql.c
 perl -pi -e "s|/tmp/negative\.db|/var/lib/apache-mod_vhost_pgsql/negative\.db|g" mod_vhost_pgsql.c
-%{_sbindir}/apxs -DHAVE_PGSQL -DHAVE_PHP -I%{_includedir}/pgsql  -c mod_vhost_pgsql.c %{ldflags} -L%{_libdir} -Wl,-ldb -Wl,-lpq -Wl,-lapr-1
+%{_bindir}/apxs -DHAVE_PGSQL -DHAVE_PHP -I%{_includedir}/pgsql  -c mod_vhost_pgsql.c %{ldflags} -L%{_libdir} -Wl,-ldb -Wl,-lpq -Wl,-lapr-1
 mv .libs/mod_vhost_pgsql.so .
 rm -rf .libs *.{la,lo,o,slo}
 
@@ -161,7 +160,7 @@ perl -pi -e "s|mod_vhost\.c|mod_vhost_mysql1\.c|g" mod_vhost_mysql1.c
 perl -pi -e "s|mod_vhost_module|vhost_mysql1_module|g" mod_vhost_mysql1.c
 perl -pi -e "s|/tmp/positive\.db|/var/lib/apache-mod_vhost_mysql/positive\.db|g" mod_vhost_mysql1.c
 perl -pi -e "s|/tmp/negative\.db|/var/lib/apache-mod_vhost_mysql/negative\.db|g" mod_vhost_mysql1.c
-%{_sbindir}/apxs -DHAVE_MYSQL -DHAVE_PHP -I%{_includedir}/mysql -c mod_vhost_mysql1.c %{ldflags} -L%{_libdir} -Wl,-ldb -Wl,-lmysqlclient -Wl,-lapr-1
+%{_bindir}/apxs -DHAVE_MYSQL -DHAVE_PHP -I%{_includedir}/mysql -c mod_vhost_mysql1.c %{ldflags} -L%{_libdir} -Wl,-ldb -Wl,-lmysqlclient -Wl,-lapr-1
 mv .libs/mod_vhost_mysql1.so .
 rm -rf .libs *.{la,lo,o,slo}
 
@@ -171,12 +170,11 @@ perl -pi -e "s|mod_vhost\.c|mod_vhost_ldap\.c|g" mod_vhost_ldap.c
 perl -pi -e "s|mod_vhost_module|vhost_ldap_module|g" mod_vhost_ldap.c
 perl -pi -e "s|/tmp/positive\.db|/var/lib/apache-mod_vhost_ldap/positive\.db|g" mod_vhost_ldap.c
 perl -pi -e "s|/tmp/negative\.db|/var/lib/apache-mod_vhost_ldap/negative\.db|g" mod_vhost_ldap.c
-%{_sbindir}/apxs -DHAVE_LDAP -DHAVE_PHP -I%{_includedir}/ldap -c mod_vhost_ldap.c %{ldflags} -L%{_libdir} -Wl,-ldb -Wl,-lldap  -Wl,-lapr-1
+%{_bindir}/apxs -DHAVE_LDAP -DHAVE_PHP -I%{_includedir}/ldap -c mod_vhost_ldap.c %{ldflags} -L%{_libdir} -Wl,-ldb -Wl,-lldap  -Wl,-lapr-1
 mv .libs/mod_vhost_ldap.so .
 rm -rf .libs *.{la,lo,o,slo}
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 install -d %{buildroot}%{_sysconfdir}/httpd/modules.d
 install -d %{buildroot}%{_libdir}/apache-extramodules
@@ -244,28 +242,139 @@ if [ "$1" = "0" ]; then
 fi
 
 %clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 %files -n apache-mod_vhost_ldap
-%defattr(-,root,root)
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/A75_mod_vhost_ldap.conf
 %attr(0755,root,root) %{_libdir}/apache-extramodules/mod_vhost_ldap.so
 %attr(0755,apache,apache) %dir /var/lib/apache-mod_vhost_ldap
 
 %files -n apache-mod_vhost_mysql1
-%defattr(-,root,root)
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/A76_mod_vhost_mysql1.conf
 %attr(0755,root,root) %{_libdir}/apache-extramodules/mod_vhost_mysql1.so
 %attr(0755,apache,apache) %dir /var/lib/apache-mod_vhost_mysql
 
 %files -n apache-mod_vhost_pgsql
-%defattr(-,root,root)
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/A77_mod_vhost_pgsql.conf
 %attr(0755,root,root) %{_libdir}/apache-extramodules/mod_vhost_pgsql.so
 %attr(0755,apache,apache) %dir /var/lib/apache-mod_vhost_pgsql
 
 %files -n apache-mod_vhost_sqlite3
-%defattr(-,root,root)
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/A78_mod_vhost_sqlite3.conf
 %attr(0755,root,root) %{_libdir}/apache-extramodules/mod_vhost_sqlite3.so
 %attr(0755,apache,apache) %dir /var/lib/apache-mod_vhost_sqlite3
+
+
+%changelog
+* Sat Feb 11 2012 Oden Eriksson <oeriksson@mandriva.com> 2.3.1-21mdv2012.0
++ Revision: 773237
+- rebuild
+
+* Tue May 24 2011 Oden Eriksson <oeriksson@mandriva.com> 2.3.1-20
++ Revision: 678434
+- mass rebuild
+
+  + Bogdano Arendartchuk <bogdano@mandriva.com>
+    - build with db 5.1 (from fwang | 2011-04-12 10:35:21 +0200)
+
+* Thu Mar 17 2011 Oden Eriksson <oeriksson@mandriva.com> 2.3.1-18
++ Revision: 645772
+- relink against libmysqlclient.so.18
+
+* Sat Jan 01 2011 Oden Eriksson <oeriksson@mandriva.com> 2.3.1-17mdv2011.0
++ Revision: 627210
+- rebuilt against mysql-5.5.8 libs, again
+
+* Thu Dec 30 2010 Oden Eriksson <oeriksson@mandriva.com> 2.3.1-16mdv2011.0
++ Revision: 626504
+- rebuilt against mysql-5.5.8 libs
+
+* Sun Dec 05 2010 Oden Eriksson <oeriksson@mandriva.com> 2.3.1-14mdv2011.0
++ Revision: 609656
+- rebuilt against new libdbi
+
+* Wed Apr 21 2010 Funda Wang <fwang@mandriva.org> 2.3.1-13mdv2010.1
++ Revision: 537583
+- rebuild
+
+* Mon Mar 08 2010 Oden Eriksson <oeriksson@mandriva.com> 2.3.1-12mdv2010.1
++ Revision: 516223
+- rebuilt for apache-2.2.15
+
+* Thu Feb 18 2010 Oden Eriksson <oeriksson@mandriva.com> 2.3.1-11mdv2010.1
++ Revision: 507476
+- rebuild
+
+* Tue Jan 12 2010 Buchan Milne <bgmilne@mandriva.org> 2.3.1-10mdv2010.1
++ Revision: 490360
+- Rebuild for db-4.8
+
+* Sat Aug 01 2009 Oden Eriksson <oeriksson@mandriva.com> 2.3.1-9mdv2010.0
++ Revision: 406676
+- rebuild
+
+* Tue Jun 30 2009 Oden Eriksson <oeriksson@mandriva.com> 2.3.1-8mdv2010.0
++ Revision: 391054
+- fix bdb linkage (duh!)
+
+* Tue Jan 06 2009 Oden Eriksson <oeriksson@mandriva.com> 2.3.1-7mdv2009.1
++ Revision: 326270
+- rebuild
+- rebuilt against mysql-5.1.30 libs
+
+* Mon Jul 14 2008 Oden Eriksson <oeriksson@mandriva.com> 2.3.1-5mdv2009.0
++ Revision: 235120
+- rebuild
+
+* Thu Jun 05 2008 Oden Eriksson <oeriksson@mandriva.com> 2.3.1-4mdv2009.0
++ Revision: 215664
+- fix rebuild
+- hard code %%{_localstatedir}/lib to ease backports
+
+  + Pixel <pixel@mandriva.com>
+    - adapt to %%_localstatedir now being /var instead of /var/lib (#22312)
+
+* Sun Mar 09 2008 Oden Eriksson <oeriksson@mandriva.com> 2.3.1-3mdv2008.1
++ Revision: 182872
+- rebuild
+
+* Mon Feb 18 2008 Thierry Vignaud <tv@mandriva.org> 2.3.1-2mdv2008.1
++ Revision: 170758
+- rebuild
+- fix "foobar is blabla" summary (=> "blabla") so that it looks nice in rpmdrake
+
+* Thu Jan 03 2008 Oden Eriksson <oeriksson@mandriva.com> 2.3.1-1mdv2008.1
++ Revision: 142103
+- 2.3.1
+- bunzip the sources
+- fix build
+- rebuilt against openldap-2.4.7 libs
+
+  + Olivier Blin <blino@mandriva.org>
+    - restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Sat Sep 08 2007 Oden Eriksson <oeriksson@mandriva.com> 2.3-5mdv2008.0
++ Revision: 82694
+- rebuild
+
+
+* Sat Mar 10 2007 Oden Eriksson <oeriksson@mandriva.com> 2.3-4mdv2007.1
++ Revision: 140770
+- rebuild
+
+* Fri Jan 19 2007 Oden Eriksson <oeriksson@mandriva.com> 2.3-3mdv2007.1
++ Revision: 110745
+- rebuilt against new postgresql libs
+
+* Thu Nov 09 2006 Oden Eriksson <oeriksson@mandriva.com> 2.3-2mdv2007.0
++ Revision: 79541
+- Import apache-mod_vhost
+
+* Tue Sep 05 2006 Oden Eriksson <oeriksson@mandriva.com> 2.3-1mdv2007.0
+- rebuilt against MySQL-5.0.24a-1mdv2007.0 due to ABI changes
+
+* Sat Jul 22 2006 Oden Eriksson <oeriksson@mandriva.com> 2.3-1mdv2007.0
+- initial Mandriva package
+
