@@ -1,7 +1,7 @@
 Summary:	DSO module for the apache web server
 Name:		apache-mod_vhost
 Version:	2.3.1
-Release:	21
+Release:	22
 Group:		System/Servers
 License:	GPL
 URL:		http://kwiatek.eu.org/mod_vhost/
