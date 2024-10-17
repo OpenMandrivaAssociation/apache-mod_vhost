@@ -4,7 +4,7 @@ Version:	2.3.1
 Release:	22
 Group:		System/Servers
 License:	GPL
-URL:		http://kwiatek.eu.org/mod_vhost/
+URL:		https://kwiatek.eu.org/mod_vhost/
 # there is no official tar ball
 Source0:	http://kwiatek.eu.org/mod_vhost/vhost/ver2.3.1/mod_vhost.c
 Source1:	A75_mod_vhost_ldap.conf
